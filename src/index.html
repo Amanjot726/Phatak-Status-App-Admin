@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"> -->
+</head>
+<body>
+  <app-root></app-root>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      document.querySelectorAll(".nav-link").forEach((ele)=>{
+        ele.addEventListener('click',()=>{
+          document.querySelectorAll(".nav-link").forEach((elem)=>{
+            if(ele.getAttribute('routerLink') === elem.getAttribute('routerLink') ){
+              elem.classList.add("active");
+            }
+            else{
+              elem.classList.remove("active");
+            }
+          });
+        });
+      });
+        
+    });
+  </script>
+
+  <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+    
+      $('input[type=number]').on('mousewheel', function(e) {
+        e.preventDefault();
+      });
+      $('input[type=number]').on('keydown', function(e) {
+        if (e.keyCode == 38 || e.keyCode == 40){
+           e.preventDefault();
+         }
+      });
+
+    });
+  </script> -->
+
+
+  
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script> -->
+</body>
+</html>
