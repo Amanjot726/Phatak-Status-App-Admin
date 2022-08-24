@@ -1,6 +1,6 @@
 # Phatak Status (Angular-WebApp)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.5. <br>
 It is a Phatak Status App, designed for Admin, for adding various Phataks (Railway Crossings) to firebase, so as to display in Phatak Status (React_Native-MobileApp).
 
 ## Development server
