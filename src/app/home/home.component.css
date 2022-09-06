@@ -1,3 +1,7 @@
+::ng-deep :root{
+    --theme-color: #048d58;
+}
+
 .btn-outline-primary {
     color: #048d58;
     border-color: #048d58;
@@ -77,10 +81,36 @@
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(2, 175, 80, 0.418);
 }
-  
+
+.form-select:focus{
+    border-color: #54d1a1;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(2, 175, 80, 0.418);
+}
 
 
+.jumbotron{
+    background-color: #009e61ee;
+    width: 65%;
+    min-width: 330px;
+    text-align-last: center;
+    font-family: cursive;
+}
 
+.jumbotron h3{
+    font-family: pacifico;
+}
+
+.jumbotron button {
+    font-size: 15px;
+}
+
+.jumbotron .btn-outline-light:hover,
+.jumbotron .btn-outline-light:focus,
+.jumbotron .btn-outline-light:active,
+.jumbotron .btn-outline-light.active {
+    color: var(--theme-color) !important;
+}
 
 .align-center {
     margin: 20px auto;
@@ -97,7 +127,7 @@
 
 .form-card {
     width: 50%;
-    min-width: 340px;
+    min-width: 330px;
     -webkit-box-shadow: 0px 0px 20px 1px rgb(218, 218, 218);
     -moz-box-shadow: 0px 0px 20px 1px rgb(218, 218, 218);
     box-shadow: 0px 0px 15px 1px rgb(218, 218, 218);
@@ -107,7 +137,8 @@
     padding: 30px;
 }
 
-.form-card svg {
+.form-card svg,
+.form-card .bi {
     color: rgb(134, 134, 134);
 }
 
@@ -124,7 +155,7 @@
     user-select: none;
 }
 
-#inchargePhone {
+#personInChargePhone {
     padding-left: 40px;
 }
 
@@ -137,9 +168,26 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+
+.inp-required{
+  content: '\F332';
+  display: inline-block;
+  padding-right: 1px;
+  vertical-align: middle;
+  font-weight: 900;
+}
+
+
 .btn {
     width: fit-content;
     align-self: center;
     padding-left: 30px;
     padding-right: 30px;
 }
+
+
+table thead th{
+    /* font-size: 20px; */
+    color: rgb(59, 59, 59);
+}
+

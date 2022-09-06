@@ -1,1 +1,14 @@
-<p>About works!</p>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-2" *ngFor="let item of news; index as idx">
+      <div class="card rounded">
+        <img [src]="item.urlToImage" alt="" class="card-img-top" height="200px">
+        <div class="card-body">
+          <h6 class="card-title lines-2">{{ item.title }}</h6>
+          <!-- <div class="card-subtitle mt-1">{{ item.author }}</div> -->
+          <p class="card-text text-muted mt-3 lines-3">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

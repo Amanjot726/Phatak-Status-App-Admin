@@ -1,0 +1,55 @@
+
+Deploy first time:
+  - ng build --configuration production
+  - firebase init
+    ~ Yes
+    ~ Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+    ~ Use an existing project
+    ~ phatak-status (Phatak status)
+    ~ dist/angular-app
+    ~ Yes
+    ~ No
+    ~ No
+  - firebase deploy --only hosting
+
+
+Deploy Again / Update project:
+  - ng build --configuration production
+  - firebase deploy --only hosting
+
+
+
+Tool for defining flow of project - flowmapp.com
+
+
+
+
+
+DevOps (Development + Operations) - is a set of practices that combines software development (Dev) and IT operations (Ops). It aims to shorten the systems development life cycle and provide continuous delivery with high software quality.
+
+  CI/CD pipeline - Continuous Integration / Continuous Delivery
+  > Code > Push to Git > build > test > production > deploy > monitor
+
+  Containerization - Docker
+
+
+- Install jenkins (Build Automation Tool)
+- Install Docker (Containerization)
+
+
+
+Docker Commands:
+
+docker images ls                    (List all images)
+docker container ls / docker ps     (list of running containers)
+docker ps -a                        (list of all containers)
+docker stop [container-name]        (stop container)
+docker start [container-name]       (start container)
+docker rm [container-name]              ->  Delete container
+docker image rm [image-name]:[tag]      ->  Delete image
+
+
+
+docker build -t [project-name]-image .      (Build docker image)
+docker run -p 8080:80 [project-name]-image  (Run docker image)
+

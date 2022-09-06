@@ -1,0 +1,30 @@
+.lines-1,.lines-2,.lines-3,.lines-4,.lines-5,.lines-6,.lines-7,.lines-8,
+.lines-9,.lines-10,.lines-11,.lines-12,.lines-13,.lines-14,
+.lines-15,.lines-16,.lines-17,.lines-18,
+.lines-19,.lines-20 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.lines-1 {-webkit-line-clamp: 1;}
+.lines-2 {-webkit-line-clamp: 2;}
+.lines-3 {-webkit-line-clamp: 3;}
+.lines-4 {-webkit-line-clamp: 4;}
+.lines-5 {-webkit-line-clamp: 5;}
+.lines-6 {-webkit-line-clamp: 6;}
+.lines-7 {-webkit-line-clamp: 7;}
+.lines-8 {-webkit-line-clamp: 8;}
+.lines-9 {-webkit-line-clamp: 9;}
+.lines-10 {-webkit-line-clamp: 10;}
+.lines-11 {-webkit-line-clamp: 11;}
+.lines-12 {-webkit-line-clamp: 12;}
+.lines-13 {-webkit-line-clamp: 13;}
+.lines-14 {-webkit-line-clamp: 14;}
+.lines-15 {-webkit-line-clamp: 15;}
+.lines-16 {-webkit-line-clamp: 16;}
+.lines-17 {-webkit-line-clamp: 17;}
+.lines-18 {-webkit-line-clamp: 18;}
+.lines-19 {-webkit-line-clamp: 19;}
+.lines-20 {-webkit-line-clamp: 20;}
