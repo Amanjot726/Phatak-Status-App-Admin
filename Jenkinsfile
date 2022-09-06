@@ -5,7 +5,7 @@ pipeline {
             steps {
                 git 'https://github.com/Amanjot726/Phatak-Status-App-Admin'
 
-                sh 'npm install'
+                bat 'npm install'
 
                 echo 'Source code is ready and Dependencies are installed'
             }
@@ -13,12 +13,12 @@ pipeline {
         stage('Test') {
             steps {
                 //sh(script: 'node_modules/.bin/cypress run || true')         // This is the command to run cypress tests and if cypress is not installed then it will skip it by (|| true)
-                 sh "npm run cy:run"
+                 bat "npm run cy:run"
             }
         }
         stage('build') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
                 // sh 'ng build'
                 echo 'Build is ready'
             }
