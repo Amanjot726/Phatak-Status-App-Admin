@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('source') {
+        stage('Source') {
             steps {
                 git 'https://github.com/Amanjot726/Phatak-Status-App-Admin'
 
@@ -13,13 +13,13 @@ pipeline {
         stage('Test') {
             steps {
                 //sh(script: 'node_modules/.bin/cypress run || true')         // This is the command to run cypress tests and if cypress is not installed then it will skip it by (|| true)
-                 sh "npm run cypress:run"
+                 sh "npm run cy:run"
             }
         }
         stage('build') {
             steps {
                 sh 'npm run build'
-                sh 'ng build'
+                // sh 'ng build'
                 echo 'Build is ready'
             }
         }
