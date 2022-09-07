@@ -30,7 +30,7 @@
               <td>{{ phatak.personInChargeName }}</td>
               <td>{{ phatak.personInChargePhone }}</td>
               <td>{{ phatak.location['latitude'] }}, {{ phatak.location['longitude'] }}</td>
-              <td>
+              <td class="actions">
                 <button type="button" class="btn btn-sm btn-primary mx-1" (click)="updatePhatak(phatak)">Update</button>
                 <button type="button" class="btn btn-sm btn-danger mx-1" (click)="deletePhatak(phatak.id)">Delete</button>
               </td>
@@ -41,7 +41,8 @@
 
     <form (ngSubmit)="addPhatakToFirebase()" method="post" class="form-card card card-body" [formGroup]="phatakForm" *ngIf="showForm" validate="true" ngNativeValidate="false">
 
-        <h5 class="card-title">Add Phatak</h5>
+        <h5 class="card-title" *ngIf="!updateData">Add Phatak</h5>
+        <h5 class="card-title" *ngIf="updateData">Update Phatak</h5>
 
         <div class="mb-3">
             <label for="phatak" class="form-label">Phatak Name</label>
@@ -49,11 +50,11 @@
                 <span class="input-group-text my-pd">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="19px" version="1.1" viewBox="0 0 510 560"  fill="currentColor" > <g> <path d="m124 448c0 15.465-12.535 28-28 28s-28-12.535-28-28 12.535-28 28-28 28 12.535 28 28"/> <path d="m404 364c-24.848 0-47.105 10.852-62.484 28h-49.516v-112.13l131.86 73.199 56.035-100.93-110.96-61.602 110.96-61.602-56.035-100.93-131.86 73.199v-73.199h-84v73.199l-131.86-73.199-56.031 100.93 110.96 61.602-110.96 61.602 56.035 100.93 131.86-73.199v112.13h-49.516c-15.379-17.148-37.637-28-62.484-28-46.391 0-84 37.609-84 84s37.609 84 84 84c41.613 0 76.066-30.285 82.738-70h29.262v70h84v-70h29.262c6.6719 39.715 41.125 70 82.738 70 46.391 0 84-37.609 84-84s-37.609-84-84-84zm0 140c-30.879 0-56-25.121-56-56s25.121-56 56-56 56 25.121 56 56-25.121 56-56 56zm-168 0v-239.67l14-7.7734 14 7.7734v239.67zm-140 0c-30.879 0-56-25.121-56-56s25.121-56 56-56 56 25.121 56 56-25.121 56-56 56zm79.117-84h32.883v14h-29.262c-0.80859-4.8203-2.0273-9.4922-3.6211-14zm-23.66-192.74 66.148-36.719-66.148-36.719-74.238-41.215 15.266-27.496 137.13 76.125 20.383 11.32 20.383-11.316 137.13-76.125 15.266 27.496-74.238 41.215-66.148 36.719 66.148 36.719 74.238 41.215-15.266 27.496-137.13-76.141-20.383-11.309-20.383 11.316-137.14 76.125-15.266-27.496zm112.54-171.26v60.742l-14 7.7734-14-7.7734v-60.742zm28 364h32.883c-1.5977 4.5078-2.8125 9.1797-3.625 14h-29.258z"/> <path d="m432 448c0 15.465-12.535 28-28 28s-28-12.535-28-28 12.535-28 28-28 28 12.535 28 28"/> </g> </svg>
                 </span>
-                <input type="text" name="phatak" placeholder="Shastri Nagar Railway Crossing" class="form-control"  id="phatakName" formControlName="phatakName" required="true" [required]="true">
+                <input type="text" name="phatak" placeholder="Shastri Nagar Railway Crossing" class="form-control" [ngClass]="{'is-invalid': input('phatakName')?.invalid && (input('phatakName').dirty || input('phatakName').touched), 'is-valid': input('phatakName')?.valid}" id="phatakName" formControlName="phatakName" required="true" [required]="true">
             </div>
             <div class="text-danger" *ngIf="input('phatakName')?.invalid && (input('phatakName').dirty || input('phatakName').touched)">
-              <div class="inp-required" *ngIf="input('phatakName').hasError('required')">Phatak Name is Required</div>
-              <div *ngIf="phatakForm.get('phatakName').hasError('minlength')">Phatak Name must be greater than 5 characters</div>
+              <div *ngIf="input('phatakName').hasError('required')">Phatak Name is Required</div>
+              <div *ngIf="phatakForm.get('phatakName').hasError('minlength')">Phatak Name must be greater than 10 characters</div>
             </div>
         </div>
 
@@ -61,7 +62,11 @@
             <label for="personInChargeName" class="form-label">Incharge Name</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                <input type="text" name="name" placeholder="Rajesh kumar" class="form-control" id="personInChargeName" formControlName="personInChargeName">
+                <input type="text" name="name" placeholder="Rajesh kumar" class="form-control" id="personInChargeName" formControlName="personInChargeName" [ngClass]="{'is-invalid': input('personInChargeName')?.invalid && (input('personInChargeName').dirty || input('personInChargeName').touched), 'is-valid': input('personInChargeName')?.valid}" required>
+            </div>
+            <div class="text-danger" *ngIf="input('personInChargeName')?.invalid && (input('personInChargeName').dirty || input('personInChargeName').touched)">
+              <div *ngIf="input('personInChargeName').hasError('required')">Phone Number is Required</div>
+              <!-- <div *ngIf="phatakForm.get('personInChargeName').hasError('pattern')">Phone Number must be of 10 digits</div> -->
             </div>
         </div>
 
@@ -70,7 +75,11 @@
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
                 <label class="prefix-inp" for="phone">+91</label>
-                <input type="number" name="phone" placeholder="8473593689" class="form-control" id="personInChargePhone" pattern="[0-9]{10}"  formControlName="personInChargePhone" required>
+                <input type="number" name="phone" placeholder="8473593689" class="form-control" id="personInChargePhone" [ngClass]="{'is-invalid': input('personInChargePhone')?.invalid && (input('personInChargePhone').dirty || input('personInChargePhone').touched), 'is-valid': input('personInChargePhone')?.valid}" formControlName="personInChargePhone" required>
+            </div>
+            <div class="text-danger" *ngIf="input('personInChargePhone')?.invalid && (input('personInChargePhone').dirty || input('personInChargePhone').touched)">
+              <div *ngIf="input('personInChargePhone').hasError('required')">Phone Number is Required</div>
+              <div *ngIf="phatakForm.get('personInChargePhone').hasError('pattern')">Phone Number must be of 10 digits</div>
             </div>
         </div>
 
@@ -78,8 +87,8 @@
             <label class="form-label">Location</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                <input type="number" placeholder="Latitude" name="latitude" class="form-control" min="0" id="latitude" formControlName="latitude" required>
-                <input type="number" placeholder="Longitude" name="longitude" class="form-control" id="longitude" formControlName="longitude" required>
+                <input type="number" placeholder="Latitude" name="latitude" class="form-control" min="0" step="any" id="latitude" formControlName="latitude" required>
+                <input type="number" placeholder="Longitude" name="longitude" class="form-control" min="0" step="any" id="longitude" formControlName="longitude" required>
             </div>
         </div>
 
@@ -109,35 +118,47 @@
             <input type="file" name="image" class="form-control" id="imageURL" (change)="selectImage($event)">
         </div>
 
-        <div class="row">
+        <div class="row mb-2">
           <div class="col-12">
             <div class="d-flex justify-content-between">
               <h5>Timings</h5>
               <button type="button" class="btn btn-primary btn-sm" (click)="addTimingDetailsToArray()">Add Timing</button>
             </div>
           </div>
-          <div class="col-12 my-2" formArrayName="timings" *ngFor="let _ of getTimingsArrayFromPhatakForm().controls; index as idx">
-            <div [formGroupName]="idx" class="row">
+        </div>
+          <div class="col-12 my-2 timing" formArrayName="timings" *ngFor="let _ of getTimingsArrayFromPhatakForm().controls; index as idx">
+            <div [formGroupName]="idx" class="row mb-2">
               <div class="col">
-                <label for="name">Train Name</label>
+                <label for="train">Train&nbsp;Name</label>
                 <input class="form-control" type="text" name="train" id="train" formControlName="train">
               </div>
               <div class="col">
-                <label for="trafficStatus">Traffic Status</label>
-                <input class="form-control" type="text" name="trafficStatus" id="trafficStatus" formControlName="trafficStatus">
+                  <label for="trafficStatus">Traffic Status</label>
+                  <select class="form-select" id="trafficStatus" name="trafficStatus" formControlName="trafficStatus">
+                    <option value="" selected>Choose...</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                <!-- <label for="trafficStatus">Traffic&nbsp;Status</label>
+                <input class="form-control" type="text" name="trafficStatus" id="trafficStatus" formControlName="trafficStatus"> -->
               </div>
-              <div class="col">
+              <div class="col-10 col-lg-6 col-md-6">
                 <label for="time">Time</label>
                 <input class="form-control" type="datetime-local" name="time" id="time" formControlName="time">
               </div>
-              <button type="button" class="btn btn-sm btn-danger col mt-3" (click)="removeTimingDetailsToArray(idx)">Remove</button>
+              <div class="col-1 btn-col">
+                <button type="button" class="col btn btn-sm btn-outline-danger delete" (click)="removeTimingDetailsToArray(idx)"><i class="bi bi-trash"></i></button>
+              </div>
               <!-- <div class="col d-flex justify-content-center align-items-center">
               </div> -->
             </div>
           </div>
-        </div>
 
-        <button type="submit" class="btn btn-outline-success mt-2">Submit</button>
+          <div class="Form-manage-btn">
+            <input type="submit" class="btn btn-outline-success mt-2" value="{{updateData ? 'Update': 'Submit'}}">
+            <input type="reset" class="btn btn-outline-danger mt-2" value="Reset" (click)="ResetForm()">
+          </div>
         <!-- <p>{{phatakForm.value | json}}</p> -->
     </form>
 </div>

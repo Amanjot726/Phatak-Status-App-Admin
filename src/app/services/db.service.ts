@@ -13,7 +13,7 @@ export class DbService {
   getPhataks(){
     let collectionRef = collection(this.firestore, "Crossings");
     onSnapshot(collectionRef, (value) => {
-      this.phataksList.next(value.docs.map((doc) => doc.data()));
+      this.phataksList.next(value.docs.map((doc) => ({id: doc.id, ...doc.data()})));
       // this.phataksList = value.docs.map(e => ({ id: e.id, ...e.data() }));
       console.log("here", this.phataksList)
     }, (error) => {

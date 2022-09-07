@@ -23,11 +23,12 @@ pipeline {
                 echo 'Build is ready'
             }
         }
-        // stage('deploy') {
-        //     steps {
-        //         sh 'npm run deploy'
-        //         echo 'Deployed'
-        //     }
-        // }
+        stage('deploy') {
+            steps {
+                bat 'ng build --configuration production'
+                bat 'firebase deploy --only hosting'
+                echo 'Deployed'
+            }
+        }
     }
 }
