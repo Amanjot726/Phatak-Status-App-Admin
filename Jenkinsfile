@@ -26,6 +26,7 @@ pipeline {
         stage('deploy') {
             steps {
                 bat 'ng build --configuration production'
+                bat 'firebase login'
                 bat 'firebase deploy --only hosting'
                 echo 'Deployed'
             }
