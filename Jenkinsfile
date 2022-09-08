@@ -29,7 +29,7 @@ pipeline {
             }
             steps {
                 bat 'ng build --configuration production'
-                bat 'firebase deploy --non-interactive --token ${auth_credentials} --only hosting'
+                bat "firebase deploy --non-interactive --token ${auth_credentials} --only hosting"
                 echo 'Deployed'
             }
         }
