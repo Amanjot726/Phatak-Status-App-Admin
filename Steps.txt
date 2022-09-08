@@ -61,3 +61,10 @@ Deploy on firebase using Jenkins:
   - firebase login:ci       // use this command to get token for firebase deploying
   - Add token as 'secret text' credentials on this link - http://localhost:8081/credentials/store/system/domain/_/
   - Then use in Jenkinsfile, by getting token in environment and then use it in firebase deploy command
+
+  * Refrences -
+    - https://juristr.com/blog/2018/02/cd-gitlab-angular-firebase/
+    - https://medium.com/velos/setting-up-firebase-app-distribution-with-automatic-builds-from-jenkins-2587028e2a3a
+    - https://www.jenkins.io/doc/book/using/using-credentials/
+    - https://firebase.google.com/docs/admin/setup
+    - https://firebase.google.com/docs/hosting/full-config
