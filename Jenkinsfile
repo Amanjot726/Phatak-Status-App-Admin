@@ -17,18 +17,18 @@ pipeline {
             steps {
                 //sh(script: 'node_modules/.bin/cypress run || true')         // This is the command to run cypress tests and if cypress is not installed then it will skip it by (|| true)
                  bat "npm run cy:run"
+                 echo 'All tests are passed successfully'
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
-                bat 'npm run build'
-                // sh 'ng build'
+                // bat 'npm run build'
+                bat 'ng build --configuration production'
                 echo 'Build is ready'
             }
         }
-        stage('deploy') {
+        stage('Deploy') {
             steps {
-                bat 'ng build --configuration production'
                 bat "firebase deploy --non-interactive --token ${auth_credentials} --only hosting"
                 echo 'Deployed'
             }

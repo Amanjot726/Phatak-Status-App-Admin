@@ -53,3 +53,11 @@ docker image rm [image-name]:[tag]      ->  Delete image
 docker build -t [project-name]-image .      (Build docker image)
 docker run -p 8080:80 [project-name]-image  (Run docker image)
 
+
+
+
+
+Deploy on firebase using Jenkins:
+  - firebase login:ci       // use this command to get token for firebase deploying
+  - Add token as 'secret text' credentials on this link - http://localhost:8081/credentials/store/system/domain/_/
+  - Then use in Jenkinsfile, by getting token in environment and then use it in firebase deploy command
