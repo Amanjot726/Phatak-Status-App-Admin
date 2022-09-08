@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment{
+      auth_credentials = credentials('auth_credentials')
+    }
     stages {
         stage('Source') {
             steps {
@@ -24,9 +27,6 @@ pipeline {
             }
         }
         stage('deploy') {
-            environment{
-              auth_credentials = credentials('auth_credentials')
-            }
             steps {
                 bat 'ng build --configuration production'
                 bat "firebase deploy --non-interactive --token ${auth_credentials} --only hosting"
