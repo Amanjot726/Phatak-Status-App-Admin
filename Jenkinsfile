@@ -24,10 +24,13 @@ pipeline {
             }
         }
         stage('deploy') {
+            environment{
+              auth_credentials = credentials('auth_credentials')
+            }
             steps {
                 bat 'ng build --configuration production'
                 bat 'firebase login'
-                bat 'firebase deploy --only hosting'
+                bat 'firebase deploy --non-interactive --token ${auth_credentials} --only hosting'
                 echo 'Deployed'
             }
         }
