@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'Comic Sans MS';
+  src: url('../assets/Fonts/ComicSansMS_font.ttf') format("truetype");
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('../assets/Fonts/Lato-Regular.ttf') format("truetype");
+}
+@font-face {
+  font-family: 'Merriweather';
+  src: url('../assets/Fonts/Merriweather-Regular.ttf') format("truetype");
+}
+@font-face {
+  font-family: 'Pacifico';
+  src: url('../assets/Fonts/Pacifico-Regular.ttf') format("truetype");
+}
+/* @font-face {
+  font-family: 'Raleway';
+  src: url('../assets/Fonts/Raleway-Regular.ttf') format("truetype");
+} */
+
 main{
     user-select: none !important;
     -moz-user-select: none !important;
@@ -7,7 +28,7 @@ main{
     font-weight: 600;
 }
 .navbar-brand{
-    font-family: pacifico;
+    font-family: 'Pacifico';
 }
 
 .navbar{
@@ -19,3 +40,4 @@ box-shadow: 0px 0px 8px 3px rgba(227,227,227,0.87);
 .navbar-expand-lg .navbar-nav{
     gap: 6px;
 }
+

@@ -144,11 +144,11 @@
     width: 65%;
     min-width: 330px;
     text-align-last: center;
-    font-family: cursive;
+    font-family: 'Comic Sans MS';
 }
 
 .jumbotron h3{
-    font-family: pacifico;
+    font-family: 'Pacifico';
 }
 
 .jumbotron button {
@@ -170,7 +170,7 @@
 
 .card-title {
     align-self: center;
-    font-family: pacifico;
+    font-family: 'Pacifico';
     font-size: 25px;
     color: rgb(59, 59, 59);
 }
