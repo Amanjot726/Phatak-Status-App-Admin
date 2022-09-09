@@ -25,8 +25,8 @@ export class HomeComponent implements OnInit {
 		phatakId: new FormControl(''),
 		personInChargeName: new FormControl('', [Validators.required]),
 		personInChargePhone: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
-		phatakStatus: new FormControl(''),
-		trafficStatus: new FormControl(''),
+		phatakStatus: new FormControl('', [Validators.required]),
+		trafficStatus: new FormControl('', [Validators.required]),
 		// latitude: new FormControl(''),
 		// longitude: new FormControl(''),
 		imageURL: new FormControl(''),
@@ -122,12 +122,13 @@ export class HomeComponent implements OnInit {
 			trafficStatus: new FormControl(phatak.trafficStatus),
 			imageURL: new FormControl(phatak.imageURL),
 			timings: new FormArray(phatak.timings.length === 0 ? [] : phatak.timings.map(element => new FormGroup({
-			time: new FormControl(datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm')),
-			trafficStatus: new FormControl(element.trafficStatus),
-			train: new FormControl(element.train)
+        time: new FormControl(datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm')),
+        trafficStatus: new FormControl(element.trafficStatus),
+        train: new FormControl(element.train)
 			})))
 		});
     this.updateData = true;
+    // this.tempImage = phatak.imageURL;
 	}
 
 	deletePhatak(phatakId: string) {
@@ -170,9 +171,9 @@ export class HomeComponent implements OnInit {
 
 	addTimingDetailsToArray() {
 		this.getTimingsArrayFromPhatakForm().push(new FormGroup({
-		time: new FormControl(null),
-		trafficStatus: new FormControl(''),
-		train: new FormControl('')
+      time: new FormControl(null),
+      trafficStatus: new FormControl(''),
+      train: new FormControl('')
 		}))
 	}
 

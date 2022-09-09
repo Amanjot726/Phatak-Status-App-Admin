@@ -39,7 +39,7 @@
         </table>
     </div>
 
-    <form (ngSubmit)="addPhatakToFirebase()" method="post" class="form-card card card-body" [formGroup]="phatakForm" *ngIf="showForm" validate="true" ngNativeValidate="false">
+    <form (ngSubmit)="addPhatakToFirebase()" method="post" class="form-card card card-body" [formGroup]="phatakForm" *ngIf="showForm"> <!--  ngNativeValidate="false" -->
 
         <h5 class="card-title" *ngIf="!updateData">Add Phatak</h5>
         <h5 class="card-title" *ngIf="updateData">Update Phatak</h5>
@@ -101,7 +101,7 @@
 
         <div class="mb-3">
             <label class="form-label">Phatak Status</label>
-            <select class="form-select" id="phatakStatus" formControlName="phatakStatus">
+            <select class="form-select" id="phatakStatus" formControlName="phatakStatus" [ngClass]="{'is-invalid': input('phatakStatus')?.invalid && (input('phatakStatus').dirty || input('phatakStatus').touched), 'is-valid': input('phatakStatus')?.valid}" required>
               <option value="" selected>Choose...</option>
               <option value='0'>Open</option>
               <option value='1'>Opening</option>
@@ -112,7 +112,7 @@
 
         <div class="mb-3">
             <label class="form-label">Traffic Status</label>
-            <select class="form-select" id="trafficStatus" formControlName="trafficStatus">
+            <select class="form-select" id="trafficStatus" formControlName="trafficStatus" [ngClass]="{'is-invalid': input('trafficStatus')?.invalid && (input('trafficStatus').dirty || input('trafficStatus').touched), 'is-valid': input('trafficStatus')?.valid}" required>
               <option value="" selected>Choose...</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
