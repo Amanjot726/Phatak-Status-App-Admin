@@ -31,8 +31,8 @@ export class HomeComponent implements OnInit {
 		// longitude: new FormControl(''),
 		imageURL: new FormControl(''),
 		location: new FormGroup({
-			latitude: new FormControl(''),
-			longitude: new FormControl(''),
+			latitude: new FormControl('', [Validators.required, Validators.pattern("^[+-]?(([1-8]?[0-9])(\.[0-9]{1,6})?|90(\.0{1,6})?)$")]),
+			longitude: new FormControl('', [Validators.required, Validators.pattern("^[+-]?((([1-9]?[0-9]|1[0-7][0-9])(\.[0-9]{1,6})?)|180(\.0{1,6})?)$")]),
 		}),
 		timings: new FormArray([])
 	});
@@ -115,8 +115,8 @@ export class HomeComponent implements OnInit {
 			// personInChargePhone: new FormControl(phatak.personInChargePhone),
 			personInChargePhone: new FormControl(phatak.personInChargePhone.length == 0 ? 0 : phatak.personInChargePhone.split(" ")[1]),
 			location: new FormGroup({
-			latitude: new FormControl(phatak.location['latitude']),
-			longitude: new FormControl(phatak.location['longitude']),
+        latitude: new FormControl(phatak.location['latitude']),
+        longitude: new FormControl(phatak.location['longitude']),
 			}),
 			phatakStatus: new FormControl(phatak.phatakStatus),
 			trafficStatus: new FormControl(phatak.trafficStatus),
@@ -145,6 +145,7 @@ export class HomeComponent implements OnInit {
 
   	// Helper Functions
 	input(input:any) {
+    // this.phatakForm.get('location'['latitude'])
 		return this.phatakForm.get(input);
 	}
 
@@ -190,17 +191,17 @@ export class HomeComponent implements OnInit {
 	ngOnInit(): void {
 		this.setphataksList();
 
-		// $(document).ready(function () {
-		//   $('input[type=number]').on('mousewheel', function(e) {
-		//     this.blur();
-		//     // e.preventDefault();
-		//   });
-		//   $('input[type=number]').on('keydown', function(e) {
-		//     if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 69){
-		//        e.preventDefault();
-		//      }
-		//   });
-		// });
+		$(document).ready(function () {
+		  // $('input[type=number]').on('mousewheel', function(e) {
+		  //   this.blur();
+		  //   // e.preventDefault();
+		  // });
+		  $('input[type=number]').on('keydown', function(e) {
+		    if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 69){
+		       e.preventDefault();
+		     }
+		  });
+		});
 	}
 
 }

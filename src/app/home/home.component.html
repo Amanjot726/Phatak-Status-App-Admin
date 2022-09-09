@@ -65,7 +65,7 @@
                 <input type="text" name="name" placeholder="Rajesh kumar" class="form-control" id="personInChargeName" formControlName="personInChargeName" [ngClass]="{'is-invalid': input('personInChargeName')?.invalid && (input('personInChargeName').dirty || input('personInChargeName').touched), 'is-valid': input('personInChargeName')?.valid}" required>
             </div>
             <div class="text-danger" *ngIf="input('personInChargeName')?.invalid && (input('personInChargeName').dirty || input('personInChargeName').touched)">
-              <div *ngIf="input('personInChargeName').hasError('required')">Phone Number is Required</div>
+              <div *ngIf="input('personInChargeName').hasError('required')">Incharge Name is Required</div>
               <!-- <div *ngIf="phatakForm.get('personInChargeName').hasError('pattern')">Phone Number must be of 10 digits</div> -->
             </div>
         </div>
@@ -87,8 +87,15 @@
             <label class="form-label">Location</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                <input type="number" placeholder="Latitude" name="latitude" class="form-control" min="0" step="any" id="latitude" formControlName="latitude" required>
-                <input type="number" placeholder="Longitude" name="longitude" class="form-control" min="0" step="any" id="longitude" formControlName="longitude" required>
+                <input type="number" placeholder="Latitude" name="latitude" class="form-control" min="0" step="any" formControlName="latitude" [ngClass]="{'is-invalid': input('location').get('latitude')?.invalid && ((input('location').get('latitude').dirty || input('location').get('latitude').touched) || (input('location').get('longitude').dirty || input('location').get('longitude').touched)), 'is-valid': input('location')?.get('latitude').valid}" required>
+                <input type="number" placeholder="Longitude" name="longitude" class="form-control" min="0" step="any" formControlName="longitude" [ngClass]="{'is-invalid': input('location').get('longitude')?.invalid && ((input('location').get('longitude').dirty || input('location').get('longitude').touched) || (input('location').get('latitude').dirty || input('location').get('latitude').touched)), 'is-valid': input('location')?.get('longitude').valid}" required>
+            </div>
+            <div class="text-danger" *ngIf="(input('location')?.invalid && (input('location').dirty || input('location').touched))">
+              <div *ngIf="input('location').get('latitude').hasError('required') && !input('location').get('longitude').hasError('required')">Latitude Coordinate is Required</div>
+              <div *ngIf="input('location').get('latitude').hasError('pattern')">Latitude Coordinate is not Valid</div>
+              <div *ngIf="input('location').get('longitude').hasError('required') && !input('location').get('latitude').hasError('required')">Longitude Coordinate is Required</div>
+              <div *ngIf="input('location').get('longitude').hasError('pattern')">Longitude Coordinate is not Valid</div>
+              <div *ngIf="input('location').get('longitude').hasError('required') && input('location').get('latitude').hasError('required')">Both Coordinates are Required</div>
             </div>
         </div>
 
