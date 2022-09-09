@@ -108,6 +108,9 @@
               <option value='2'>Closing</option>
               <option value='3'>Closed</option>
             </select>
+            <div class="text-danger" *ngIf="input('phatakStatus')?.invalid && (input('phatakStatus').dirty || input('phatakStatus').touched)">
+              <div *ngIf="input('phatakStatus').hasError('required')">Phatak Status is Required</div>
+            </div>
         </div>
 
         <div class="mb-3">
@@ -118,6 +121,9 @@
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
+            <div class="text-danger" *ngIf="input('phatakStatus')?.invalid && (input('phatakStatus').dirty || input('phatakStatus').touched)">
+              <div *ngIf="input('phatakStatus').hasError('required')">Traffic Status is Required</div>
+            </div>
         </div>
 
         <div class="mb-3">

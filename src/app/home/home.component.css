@@ -164,6 +164,7 @@
 
 .align-center {
     margin: 20px auto;
+    margin-bottom: 30px;
     text-align: -webkit-center;
     text-align-last: left;
 }
@@ -304,7 +305,7 @@ table thead th{
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
 }
 
