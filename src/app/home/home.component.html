@@ -2,7 +2,7 @@
     <div class="jumbotron mt-4 p-4 mx-lg-5 text-white rounded">
       <h3>Manage Phatak's</h3>
       <p>You can easlily manage railway crossings form this backend</p>
-      <button type="button" class="btn btn-outline-light" (click)="showForm = !showForm">
+      <button type="button" class="btn btn-outline-light" (click)="changeView()">
         {{ showForm ? 'Hide' : 'Show' }} Form
       </button>
     </div>
@@ -33,7 +33,7 @@
               <td>{{ phatak.location['latitude'] }}, {{ phatak.location['longitude'] }}</td>
               <td class="actions">
                 <button type="button" class="btn btn-sm btn-primary mx-1 my-2" (click)="updatePhatak(phatak)">Update</button>
-                <button type="button" class="btn btn-sm btn-danger mx-1 my-2" (click)="deletePhatak(phatak.id)">Delete</button>
+                <button type="button" class="btn btn-sm btn-danger mx-1 my-2" (click)="deletePhatak(phatak.id,phatak.imageURL)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -104,7 +104,7 @@
         <div class="mb-3">
             <label class="form-label">Phatak Status</label>
             <select class="form-select" id="phatakStatus" formControlName="phatakStatus" [ngClass]="{'is-invalid': input('phatakStatus')?.invalid && (input('phatakStatus').dirty || input('phatakStatus').touched), 'is-valid': input('phatakStatus')?.valid}" required>
-              <option value="" selected>Choose...</option>
+              <option value='' selected>Choose...</option>
               <option value='0'>Open</option>
               <option value='1'>Opening</option>
               <option value='2'>Closing</option>
@@ -118,7 +118,7 @@
         <div class="mb-3">
             <label class="form-label">Traffic Status</label>
             <select class="form-select" id="trafficStatus" formControlName="trafficStatus" [ngClass]="{'is-invalid': input('trafficStatus')?.invalid && (input('trafficStatus').dirty || input('trafficStatus').touched), 'is-valid': input('trafficStatus')?.valid}" required>
-              <option value="" selected>Choose...</option>
+              <option value='' selected>Choose...</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>

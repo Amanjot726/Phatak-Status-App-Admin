@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { deleteDoc, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
-import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
+import { deleteObject, getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { FormGroup,FormControl, FormArray, FormRecord, Validators } from "@angular/forms";
 import { collection, setDoc, Timestamp } from '@firebase/firestore';
 import * as $ from 'jquery';
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
 	tempImage: any = null;
 	phataksList: any[] = [];
 
-	constructor(private firestore: Firestore, private dbService: DbService, private storage: Storage) { }
+	constructor(private firestore: Firestore, private dbService: DbService, private storage: Storage,private readonly changeDetectorRef: ChangeDetectorRef) { }
 
 	async setphataksList() {
 		// this.DbService.getPhataks();
@@ -65,19 +65,19 @@ export class HomeComponent implements OnInit {
 
 		let value:any = {...this.phatakForm.value};
 		let phatakInfo = {
-		phatakId: value?.phatakId?.length === 0 ? doc(collection(this.firestore, "Crossings")).id : value.phatakId,
-		location: value.location,
-		phatakName: value.phatakName,
-		personInChargeName: value.personInChargeName,
-		personInChargePhone: "+91 "+value.personInChargePhone,
-		phatakStatus: value.phatakStatus,
-		trafficStatus: value.trafficStatus,
-		timings: value.timings.map(e => ({
-			trafficStatus: e.trafficStatus,
-			train: e.train,
-			time: Timestamp.fromDate(new Date(e.time))
-		})),
-		imageURL: value.imageURL
+      phatakId: value?.phatakId?.length === 0 ? doc(collection(this.firestore, "Crossings")).id : value.phatakId,
+      location: value.location,
+      phatakName: value.phatakName,
+      personInChargeName: value.personInChargeName,
+      personInChargePhone: "+91 "+value.personInChargePhone,
+      phatakStatus: value.phatakStatus,
+      trafficStatus: value.trafficStatus,
+      timings: value.timings.map(e => ({
+        trafficStatus: e.trafficStatus,
+        train: e.train,
+        time: Timestamp.fromDate(new Date(e.time))
+      })),
+		  imageURL: value.imageURL
 		}
 
 		// ============= Set the image to firebase storage ================
@@ -98,12 +98,15 @@ export class HomeComponent implements OnInit {
 				this.updateData = false;
 			}
       this.getTimingsArrayFromPhatakForm().clear();
-			this.showForm = false;
+      setTimeout(() => {
+			  this.showForm = false;
+        this.formSubmitLoading = false;
+      }, 1000);
 		},
 		(error)=>{
 			console.log(error);
+      this.formSubmitLoading = false;
 		});
-    this.formSubmitLoading = false;
   }
 
 
@@ -112,6 +115,7 @@ export class HomeComponent implements OnInit {
 	updatePhatak(phatak: any) {
 		this.showForm = true;
 		let datepipe = new DatePipe('en-US');
+    // this.phatakForm.patchValue({
 		this.phatakForm = new FormGroup({
 			phatakId: new FormControl(phatak.phatakId),
 			phatakName: new FormControl(phatak.phatakName),
@@ -135,10 +139,18 @@ export class HomeComponent implements OnInit {
     // this.tempImage = phatak.imageURL;
 	}
 
-	deletePhatak(phatakId: string) {
+	deletePhatak(phatakId: string, imageURL: string) {
 		console.log('phatakId',phatakId);
 		let docRef = doc(this.firestore, "Crossings/" + phatakId);
 		deleteDoc(docRef).then(() => {
+      // delete image from storage getting storage path from imageURL
+      // let storageRef = ref(this.storage, "Crossings/" + imageURL.split("%2F")[1].split("?")[0]);
+      let storageRef = ref(this.storage,imageURL);
+      deleteObject(storageRef).then(() => {
+        console.log("Image deleted successfully");
+      }).catch((error) => {
+        console.log("Error while deleting image", error);
+      });
 			console.log("Delete Successfully");
 		})
 		.catch((error) => {
@@ -156,6 +168,7 @@ export class HomeComponent implements OnInit {
 
   ResetForm(){
     this.phatakForm.reset();
+    this.phatakForm.updateValueAndValidity();
     this.getTimingsArrayFromPhatakForm().clear();
     this.updateData = false;
   }
@@ -187,11 +200,10 @@ export class HomeComponent implements OnInit {
 	}
 
 	selectImage(event) {
-		console.log(">>> Files: ", event.target.files);
+		// console.log(">>> Files: ", event.target.files);
 		this.tempImage = event.target.files[0];
 	}
   SubmitForm() {
-    console.log("exe");
     if (this.phatakForm.valid) {
       this.formSubmitLoading = true;
       setTimeout(() => {
@@ -202,7 +214,11 @@ export class HomeComponent implements OnInit {
       this.phatakForm.markAllAsTouched();
       return;
     }
-    console.log("end");
+  }
+
+  changeView(){
+    this.showForm = !this.showForm;
+    this.changeDetectorRef.detectChanges();
   }
 
 
