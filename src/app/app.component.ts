@@ -14,7 +14,7 @@ export class AppComponent {
       this.splashScreen = false;
       setTimeout(() => {
         this.display_splash = false;
-      }, 600);
-    }, 2500);
+      }, 800);
+    }, 2800);
   }
 }

@@ -6,11 +6,11 @@ main{
 }
 
 main.fade-in {
-    animation: fadeIn ease 1s forwards;
-    -webkit-animation: fadeIn ease 1s forwards;
-    -moz-animation: fadeIn ease 1s forwards;
-    -o-animation: fadeIn ease 1s forwards;
-    -ms-animation: fadeIn ease 1s forwards;
+    animation: fadeIn ease 1.3s forwards 0.2s;
+    -webkit-animation: fadeIn ease 1.3s forwards 0.2s;
+    -moz-animation: fadeIn ease 1.3s forwards 0.2s;
+    -o-animation: fadeIn ease 1.3s forwards 0.2s;
+    -ms-animation: fadeIn ease 1.3s forwards 0.2s;
 }
 
 @keyframes fadeIn {
@@ -50,11 +50,11 @@ box-shadow: 0px 0px 8px 3px rgba(227,227,227,0.87);
   opacity: 0;
 }
 .contain.fade-in {
-  -webkit-animation: fadeIn ease 1s 500ms forwards;
-  -moz-animation: fadeIn ease 1s 500ms forwards;
-  -o-animation: fadeIn ease 1s 500ms forwards;
-  -ms-animation: fadeIn ease 1s 500ms forwards;
-  animation: fadeIn ease 1s 500ms forwards;
+  -webkit-animation: fadeIn ease 1.2s 500ms forwards;
+  -moz-animation: fadeIn ease 1.2s 500ms forwards;
+  -o-animation: fadeIn ease 1.2s 500ms forwards;
+  -ms-animation: fadeIn ease 1.2s 500ms forwards;
+  animation: fadeIn ease 1.2s 500ms forwards;
 }
 .contain.fade-out{
   animation: fadeout 1s ease-in-out forwards;

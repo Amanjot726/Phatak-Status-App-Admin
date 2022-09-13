@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 	showForm = true;
   updateData = false;
 	le = Number(0);
+  formSubmitLoading = false;
 
 	// location =
 
@@ -60,6 +61,7 @@ export class HomeComponent implements OnInit {
 		this.phatakForm.markAllAsTouched();
 		return;
 		}
+    this.formSubmitLoading = true;
 
 		let value:any = {...this.phatakForm.value};
 		let phatakInfo = {
@@ -101,7 +103,8 @@ export class HomeComponent implements OnInit {
 		(error)=>{
 			console.log(error);
 		});
-  	}
+    this.formSubmitLoading = false;
+  }
 
 
 
@@ -187,6 +190,20 @@ export class HomeComponent implements OnInit {
 		console.log(">>> Files: ", event.target.files);
 		this.tempImage = event.target.files[0];
 	}
+  SubmitForm() {
+    console.log("exe");
+    if (this.phatakForm.valid) {
+      this.formSubmitLoading = true;
+      setTimeout(() => {
+        this.addPhatakToFirebase();
+      }, 300);
+    }
+    else{
+      this.phatakForm.markAllAsTouched();
+      return;
+    }
+    console.log("end");
+  }
 
 
 

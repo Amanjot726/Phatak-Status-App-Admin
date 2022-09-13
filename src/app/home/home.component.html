@@ -9,6 +9,7 @@
 </div>
 
 <div class="align-center {{!showForm ? 'side-blur':''}}">
+  <div class="cont {{!showForm ? 'fade-in': 'fade-out'}}">
     <h5 class="card-title mb-1 mb-3 ps-3" *ngIf="!showForm">Phatak Lists</h5>
     <div class="container mt-3 px-lg-5 scrollable" *ngIf="!showForm">
         <!-- {{ phataksList | json }} -->
@@ -38,8 +39,9 @@
           </tbody>
         </table>
     </div>
+  </div>
 
-    <form (ngSubmit)="addPhatakToFirebase()" method="post" class="form-card card card-body" [formGroup]="phatakForm" *ngIf="showForm"> <!--  ngNativeValidate="false" -->
+    <form name="AddPhatak" method="post" class="form-card card card-body {{showForm ? 'fade-in': 'fade-out'}}" [formGroup]="phatakForm" *ngIf="showForm"> <!--  (ngSubmit)="addPhatakToFirebase()"   ngNativeValidate="false" -->
 
         <h5 class="card-title" *ngIf="!updateData">Add Phatak</h5>
         <h5 class="card-title" *ngIf="updateData">Update Phatak</h5>
@@ -169,8 +171,13 @@
           </div>
 
           <div class="Form-manage-btn">
-            <input type="submit" class="btn btn-outline-success mt-2" value="{{updateData ? 'Update': 'Submit'}}">
-            <input type="reset" class="btn btn-outline-danger mt-2" value="Reset" (click)="ResetForm()">
+            <button type="submit" class="btn btn-outline-success mt-2" (click)="SubmitForm()">
+              <div class="spinner-border text-light" role="status" *ngIf="formSubmitLoading">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <span *ngIf="!formSubmitLoading">{{updateData ? 'Update': 'Submit'}}</span>
+            </button>
+            <button type="reset" class="btn btn-outline-danger mt-2" (click)="ResetForm()">Reset</button>
           </div>
         <!-- <p>{{phatakForm.value | json}}</p> -->
     </form>
