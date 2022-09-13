@@ -80,22 +80,23 @@ export class HomeComponent implements OnInit {
 
 		// ============= Set the image to firebase storage ================
 		if(this.tempImage != null) {
-		let storageRef = ref(this.storage, "phataks/" + this.tempImage.name)
-		await uploadBytes(storageRef, this.tempImage);
-		phatakInfo.imageURL = await getDownloadURL(storageRef);
-		alert(phatakInfo.imageURL);
+			// console.log("this.tempImage.name = ",this.tempImage.name)
+			let storageRef = ref(this.storage, "Crossings/" + this.tempImage.name)
+			await uploadBytes(storageRef, this.tempImage);
+			phatakInfo.imageURL = await getDownloadURL(storageRef);
 		}
 
 		// ============= Save the phatak to firebase ================
 		let docRef  = doc(this.firestore,'Crossings/'+ phatakInfo.phatakId);
 		setDoc(docRef, phatakInfo).then(
 		()=>{
-			console.log('saved');
+      console.log('saved');
 			this.phatakForm.reset();
+			if (this.updateData) {
+				this.updateData = false;
+			}
+      this.getTimingsArrayFromPhatakForm().clear();
 			this.showForm = false;
-      if (this.updateData) {
-        this.updateData = false;
-      }
 		},
 		(error)=>{
 			console.log(error);
@@ -152,6 +153,7 @@ export class HomeComponent implements OnInit {
 
   ResetForm(){
     this.phatakForm.reset();
+    this.getTimingsArrayFromPhatakForm().clear();
     this.updateData = false;
   }
 
@@ -182,7 +184,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	selectImage(event) {
-		// console.log(">>> Files: ", event.target.files);
+		console.log(">>> Files: ", event.target.files);
 		this.tempImage = event.target.files[0];
 	}
 
@@ -197,9 +199,14 @@ export class HomeComponent implements OnInit {
 		  //   this.blur();
 		  //   // e.preventDefault();
 		  // });
-		  $('input[type=number]').on('keydown', function(e) {
-		    if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 69){
-		       e.preventDefault();
+      $('input[type=number]').on('keydown', function(e) {
+		    if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 69) {
+		      e.preventDefault();
+		     }
+		  });
+		  $('input[id=personInChargePhone]').on('keydown', function(e) {
+		    if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 69 || e.keyCode == 189 || e.keyCode == 187 || e.keyCode == 190 || e.keyCode == 109 || e.keyCode == 107 || e.keyCode == 110) {
+		      e.preventDefault();
 		     }
 		  });
 		});

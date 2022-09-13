@@ -8,9 +8,9 @@
     </div>
 </div>
 
-<div class="align-center">
+<div class="align-center {{!showForm ? 'side-blur':''}}">
+    <h5 class="card-title mb-1 mb-3 ps-3" *ngIf="!showForm">Phatak Lists</h5>
     <div class="container mt-3 px-lg-5 scrollable" *ngIf="!showForm">
-        <h5 class="card-title mb-1 mb-3">Phatak Lists</h5>
         <!-- {{ phataksList | json }} -->
         <table class="table">
           <thead>
@@ -28,11 +28,11 @@
               <td>{{ idx + 1 }}</td>
               <td>{{ phatak.phatakName }}</td>
               <td>{{ phatak.personInChargeName }}</td>
-              <td>{{ phatak.personInChargePhone }}</td>
+              <td class="no-break">{{ phatak.personInChargePhone }}</td>
               <td>{{ phatak.location['latitude'] }}, {{ phatak.location['longitude'] }}</td>
               <td class="actions">
-                <button type="button" class="btn btn-sm btn-primary mx-1" (click)="updatePhatak(phatak)">Update</button>
-                <button type="button" class="btn btn-sm btn-danger mx-1" (click)="deletePhatak(phatak.id)">Delete</button>
+                <button type="button" class="btn btn-sm btn-primary mx-1 my-2" (click)="updatePhatak(phatak)">Update</button>
+                <button type="button" class="btn btn-sm btn-danger mx-1 my-2" (click)="deletePhatak(phatak.id)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -79,7 +79,7 @@
             </div>
             <div class="text-danger" *ngIf="input('personInChargePhone')?.invalid && (input('personInChargePhone').dirty || input('personInChargePhone').touched)">
               <div *ngIf="input('personInChargePhone').hasError('required')">Phone Number is Required</div>
-              <div *ngIf="phatakForm.get('personInChargePhone').hasError('pattern')">Phone Number must be of 10 digits</div>
+              <div *ngIf="input('personInChargePhone').hasError('pattern')">Phone Number must be of 10 digits</div>
             </div>
         </div>
 
@@ -121,8 +121,8 @@
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
-            <div class="text-danger" *ngIf="input('phatakStatus')?.invalid && (input('phatakStatus').dirty || input('phatakStatus').touched)">
-              <div *ngIf="input('phatakStatus').hasError('required')">Traffic Status is Required</div>
+            <div class="text-danger" *ngIf="input('trafficStatus')?.invalid && (input('trafficStatus').dirty || input('trafficStatus').touched)">
+              <div *ngIf="input('trafficStatus').hasError('required')">Traffic Status is Required</div>
             </div>
         </div>
 

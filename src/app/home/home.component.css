@@ -270,9 +270,9 @@ td {
 }
 
 .actions{
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  gap: 11px;
+  gap: 11px; */
 }
 
 .delete {
@@ -303,6 +303,7 @@ table thead th{
 .scrollable{
   overflow-x: scroll !important;
   width: 100%;
+  position: relative;
 }
 
 .scrollable::-webkit-scrollbar {
@@ -310,6 +311,41 @@ table thead th{
   height: 0px !important;
 }
 
+.side-blur{
+  position: relative;
+}
+.side-blur:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  width: 32px;
+  right: -13px;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  -webkit-box-shadow: inset -16px 0px 7px 8px rgb(255 255 255);
+-moz-box-shadow: inset -16px 0px 7px 8px rgb(255 255 255);
+box-shadow: inset -16px 0px 7px 8px rgb(255 255 255);
+}
+
+.side-blur:before{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0px;
+  width: 32px;
+  left: -13px;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  z-index: 1;
+  -webkit-box-shadow: inset 16px 0px 7px 8px rgb(255 255 255);
+  -moz-box-shadow: inset 16px 0px 7px 8px rgb(255 255 255);
+  box-shadow: inset 16px 0px 7px 8px rgb(255 255 255);
+}
+
+/* .scrollable .btn{
+  z-index: -1;
+} */
 
 .Form-manage-btn {
   width: 100%;
@@ -319,3 +355,12 @@ table thead th{
   align-items: center;
 }
 
+
+td, th{
+  word-wrap: break-word;
+  max-width: 150px;
+}
+
+.no-break{
+  white-space: nowrap;
+}
