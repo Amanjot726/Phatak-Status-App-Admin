@@ -756,7 +756,7 @@
   </div>
 </div>
 
-<main *ngIf="!display_splash" class="{{!display_splash? 'fade-in':''}}">
+<main class="{{!display_splash? 'fade-in':'content-hidden'}}">  <!-- *ngIf="!display_splash" -->
   <nav class="navbar sticky-top navbar-expand-lg bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/">Phatak Status</a>
@@ -767,15 +767,20 @@
         <div class="me-auto"></div>
         <ul class="navbar-nav mb-2 mb-lg-0 d-flex">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+            <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Phataks</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/About" routerLinkActive="active">About</a>
+            <a class="nav-link" routerLink="/Phatak-Incharge" routerLinkActive="active">Incharges</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/Contact" routerLinkActive="active">Contact</a>
-          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" routerLink="/Logout" routerLinkActive="active">Logout</a>
+          </li> -->
         </ul>
+        <div class="d-flex ms-3">
+          <a routerLink="/Logout">
+            <button class="btn btn-outline-success"><i class="bi bi-box-arrow-right"></i> Logout</button>
+          </a>
+        </div>
         <!-- <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>

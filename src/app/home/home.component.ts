@@ -98,10 +98,10 @@ export class HomeComponent implements OnInit {
 				this.updateData = false;
 			}
       this.getTimingsArrayFromPhatakForm().clear();
-      setTimeout(() => {
-			  this.showForm = false;
-        this.formSubmitLoading = false;
-      }, 1000);
+      this.formSubmitLoading = false;
+      this.showForm = false;
+      // setTimeout(() => {
+      // }, 1000);
 		},
 		(error)=>{
 			console.log(error);
@@ -115,26 +115,44 @@ export class HomeComponent implements OnInit {
 	updatePhatak(phatak: any) {
 		this.showForm = true;
 		let datepipe = new DatePipe('en-US');
-    // this.phatakForm.patchValue({
-		this.phatakForm = new FormGroup({
-			phatakId: new FormControl(phatak.phatakId),
-			phatakName: new FormControl(phatak.phatakName),
-			personInChargeName: new FormControl(phatak.personInChargeName),
+    this.phatakForm.patchValue({
+      phatakId: phatak.phatakId,
+			phatakName: phatak.phatakName,
+			personInChargeName: phatak.personInChargeName,
 			// personInChargePhone: new FormControl(phatak.personInChargePhone),
-			personInChargePhone: new FormControl(phatak.personInChargePhone.length == 0 ? 0 : phatak.personInChargePhone.split(" ")[1]),
-			location: new FormGroup({
-        latitude: new FormControl(phatak.location['latitude']),
-        longitude: new FormControl(phatak.location['longitude']),
-			}),
-			phatakStatus: new FormControl(phatak.phatakStatus),
-			trafficStatus: new FormControl(phatak.trafficStatus),
-			imageURL: new FormControl(phatak.imageURL),
-			timings: new FormArray(phatak.timings.length === 0 ? [] : phatak.timings.map(element => new FormGroup({
-        time: new FormControl(datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm')),
-        trafficStatus: new FormControl(element.trafficStatus),
-        train: new FormControl(element.train)
-			})))
-		});
+			personInChargePhone: phatak.personInChargePhone.length == 0 ? 0 : phatak.personInChargePhone.split(" ")[1],
+			location: {
+        latitude: phatak.location['latitude'],
+        longitude: phatak.location['longitude'],
+			},
+			phatakStatus: phatak.phatakStatus,
+			trafficStatus: phatak.trafficStatus,
+			imageURL: phatak.imageURL,
+			timings: phatak.timings.length === 0 ? [] : phatak.timings.map(element => ({
+        time: datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm'),
+        trafficStatus: element.trafficStatus,
+        train: element.train
+			}))
+    });
+		// this.phatakForm = new FormGroup({
+		// 	phatakId: new FormControl(phatak.phatakId),
+		// 	phatakName: new FormControl(phatak.phatakName),
+		// 	personInChargeName: new FormControl(phatak.personInChargeName),
+		// 	// personInChargePhone: new FormControl(phatak.personInChargePhone),
+		// 	personInChargePhone: new FormControl(phatak.personInChargePhone.length == 0 ? 0 : phatak.personInChargePhone.split(" ")[1]),
+		// 	location: new FormGroup({
+    //     latitude: new FormControl(phatak.location['latitude']),
+    //     longitude: new FormControl(phatak.location['longitude']),
+		// 	}),
+		// 	phatakStatus: new FormControl(phatak.phatakStatus),
+		// 	trafficStatus: new FormControl(phatak.trafficStatus),
+		// 	imageURL: new FormControl(phatak.imageURL),
+		// 	timings: new FormArray(phatak.timings.length === 0 ? [] : phatak.timings.map(element => new FormGroup({
+    //     time: new FormControl(datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm')),
+    //     trafficStatus: new FormControl(element.trafficStatus),
+    //     train: new FormControl(element.train)
+		// 	})))
+		// });
     this.updateData = true;
     // this.tempImage = phatak.imageURL;
 	}
@@ -174,12 +192,6 @@ export class HomeComponent implements OnInit {
   }
 
 	checkValidity(input:any) {
-		// input('phatakName')?.invalid && (input('phatakName').dirty || input('phatakName').touched)
-		// if (this.input(input)?.invalid && (this.input(input).dirty || this.input(input).touched)) {
-		//   return true;
-		// }
-		// return false;
-		// let result =
 		return this.phatakForm.get(input)?.invalid && this.phatakForm.get(input)?.dirty || this.phatakForm.get(input)?.touched;
 	}
 
@@ -218,7 +230,7 @@ export class HomeComponent implements OnInit {
 
   changeView(){
     this.showForm = !this.showForm;
-    this.changeDetectorRef.detectChanges();
+		this.changeDetectorRef.detectChanges();
   }
 
 

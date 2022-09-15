@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
-import { BodyComponent } from './body/body.component';
-import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { InchargesComponent } from './incharges/incharges.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -12,8 +10,7 @@ const routes: Routes = [
   // { path: 'body', component: BodyComponent},
   // { path: '', component: HomeComponent,},
   { path: '', component: HomeComponent,},
-  { path: 'About', component: AboutComponent},
-  { path: 'Contact', component: ContactComponent},
+  { path: 'Phatak-Incharge', component: InchargesComponent},
   // { path: '**', redirectTo: 'Error404'},   // If there is no routing url exists then it will redirect to the url you provide to error 404 page
 ];
 
