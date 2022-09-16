@@ -756,8 +756,9 @@
   </div>
 </div>
 
-<main class="{{!display_splash? 'fade-in':'content-hidden'}}">  <!-- *ngIf="!display_splash" -->
-  <nav class="navbar sticky-top navbar-expand-lg bg-light">
+
+<main class="fade-out {{!display_splash? 'fade-in':'content-hidden'}}">  <!-- *ngIf="!display_splash" -->
+  <nav class="navbar sticky-top navbar-expand-lg bg-light" *ngIf="IsLoggedIn">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/">Phatak Status</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -777,9 +778,7 @@
           </li> -->
         </ul>
         <div class="d-flex ms-3">
-          <a routerLink="/Logout">
-            <button class="btn btn-outline-success"><i class="bi bi-box-arrow-right"></i> Logout</button>
-          </a>
+          <button class="btn btn-outline-success" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
         </div>
         <!-- <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

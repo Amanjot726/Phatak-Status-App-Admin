@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { getAuth } from '@angular/fire/auth';
 import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { onAuthStateChanged } from '@firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -9,6 +11,8 @@ import { BehaviorSubject } from 'rxjs';
 export class DbService {
 
   phataksList = new BehaviorSubject<any[]>([]);
+  IsLoggedIn = new BehaviorSubject<any>(false);
+  auth = getAuth();
 
   getPhataks(){
     let collectionRef = collection(this.firestore, "Crossings");
@@ -22,11 +26,23 @@ export class DbService {
     // return this.phataksList;
   }
 
-  setPhataks(){
-
+  updateAuthState(status: boolean){
+    this.IsLoggedIn.next(status);
   }
+
+
 
   constructor(private firestore: Firestore) {
     this.getPhataks()
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        // User is signed in
+        const uid = user.uid;
+        this.updateAuthState(true);
+      } else {
+        // User is signed out
+        this.updateAuthState(false);
+      }
+    });
   }
 }

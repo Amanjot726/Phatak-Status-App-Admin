@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
 	showForm = true;
   updateData = false;
-	le = Number(0);
+	// le = Number(0);
   formSubmitLoading = false;
 
 	// location =

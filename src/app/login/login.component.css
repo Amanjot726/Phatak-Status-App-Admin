@@ -72,6 +72,10 @@
   background-color: #e9f0ee;
 }
 
+.form-control{
+  border-color: #0c473177;
+}
+
 .form-control:focus {
   color: #495057;
   background-color: rgba(255, 255, 255, 0.219);
@@ -142,109 +146,117 @@
   color: #dc3545;
 }
 
+.illustration{
+  width: 300px;
+  height: 300px;
+}
+/* .container.login{
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+} */
 
 
-
-
-
-main{
-  -ms-user-select: none !important;
-      user-select: none !important;
-  -moz-user-select: none !important;
-  -webkit-user-select: none !important;
-  opacity: 0;
+@media screen and (min-width: 768px) {
+  .illustration{
+    width: auto;
+    /* vertical-align: middle; */
+    height: 60%;
+    display: inline-flex;
+    justify-content: end;
+    max-width: 500px;
+  }
 }
 
-main.fade-in {
-  animation: fadeIn ease 1.3s forwards 0.1s;
-  -webkit-animation: fadeIn ease 1.3s forwards 0.1s;
-  -moz-animation: fadeIn ease 1.3s forwards 0.1s;
-  -o-animation: fadeIn ease 1.3s forwards 0.1s;
-  -ms-animation: fadeIn ease 1.3s forwards 0.1s;
+
+.login-form{
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  align-self: center;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.m-form{
+  width: 30%;
+  min-width: 260px;
+  max-width: 315px;
+}
+
+.m-form label{
+  color: #1a5235d2;
+  font-weight: 500;
+}
+
+.m-form input::placeholder{
+  color: #034623ab;
+  font-weight: 400;
+}
+
+.Form-title{
+  font-family: 'pacifico', cursive;
+    margin-bottom: 20px;
+    color: #157e49;
+    border-bottom: 2px solid #157e49;
+    padding-bottom: 2px;
+    padding-left: 7px;
+    padding-right: 9px;
+    width: fit-content;
+}
+
+.btn-cont{
+  width: 100%;
+  text-align: center;
+}
+
+.btn-cont .btn{
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.text-danger {
+  font-size: 12.5px;
+  padding-left: 3px;
+  padding-top: 3.5px;
+  margin-bottom: -7px;
+}
+
+.fade-in {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
 }
 
 @-webkit-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-
-@-webkit-keyframes fadeout {
-from { opacity: 1; }
-to   { opacity: 0;}
-}
-
-@keyframes fadeout {
-from { opacity: 1; }
-to   { opacity: 0;}
-}
-
-.nav-link.active{
-  font-weight: 600;
-}
-.navbar-brand{
-  font-family: 'Pacifico';
-}
-
-.navbar{
-  -webkit-box-shadow: 0px 0px 8px 3px rgba(227,227,227,0.87);
-box-shadow: 0px 0px 8px 3px rgba(227,227,227,0.87);
-}
-
-.navbar-expand-lg .navbar-nav{
-  gap: 6px;
-}
-
-.splash_screen{
-position: absolute;
-top: 50%;
-left: 50%;
--webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-}
-.contain{
-opacity: 0;
-}
-.contain.fade-in {
--webkit-animation: fadeIn ease 1.2s 500ms forwards;
-animation: fadeIn ease 1.2s 500ms forwards;
-}
-.contain.fade-out{
--webkit-animation: fadeout 1s ease-in-out forwards;
-        animation: fadeout 1s ease-in-out forwards;
-}
-
-
-.app-name{
-  font-family: 'Pacifico';
-  font-size: 35px;
-  text-align: center;
-  margin-bottom: 15px;
-  color: rgba(48, 48, 48, 0.973);
-}
-
-.heading{
-  /* font-family: 'Uncial Antiqua', cursive; */
-  font-family: 'Fredoka One', cursive;
-  /* font-weight: 500; */
-  text-transform: uppercase;
-  font-size: 27px;
-  text-align: center;
-  color: rgb(0, 129, 50);
-}
-
-.admin-illustration{
-  width: 300px;
-  height: 300px;
-  /* object-fit: cover; */
-}
-
-.content-hidden{
-  content-visibility: hidden;
-  display: none;
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
