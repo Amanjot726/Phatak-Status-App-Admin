@@ -149,6 +149,7 @@
 .illustration{
   width: 300px;
   height: 300px;
+  margin-top: 36px;
 }
 /* .container.login{
   display: flex;
@@ -175,7 +176,7 @@
 
 .login-form{
   position: absolute;
-  top: 46%;
+  top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
@@ -195,6 +196,7 @@
   width: 30%;
   min-width: 260px;
   max-width: 315px;
+  margin-bottom: 36px;
 }
 
 .m-form label{

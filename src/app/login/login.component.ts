@@ -40,6 +40,10 @@ export class LoginComponent implements OnInit {
 	}
 
   HandleLogin(){
+    if (this.LoginForm.invalid){
+      this.LoginForm.markAllAsTouched();
+      return;
+    }
     this.IsloggedInProcessing = true;
     setTimeout(() => {
       this.Login();

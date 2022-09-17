@@ -128,6 +128,14 @@ h2 {
   align-content: center;
 }
 
+.row svg{
+  max-height: 420px;
+}
+
+.row p{
+  font-size: 16px;
+}
+
 @media screen and (max-width: 768px) {
   body {
     display: block;
@@ -135,6 +143,9 @@ h2 {
   .container {
     margin-top: 70px;
     margin-bottom: 70px;
+  }
+  .row svg{
+    max-height: 350px;
   }
 }
 
@@ -144,5 +155,12 @@ h2 {
   }
   .btn {
     padding: 8.5px 45px;
+  }
+  h2 {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+  .row p{
+    font-size: 15px;
   }
 }
