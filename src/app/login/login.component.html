@@ -141,7 +141,7 @@
       </g>
     </svg>
   </div>
-  <form name="Login" (ngSubmit)="Login()" method="post" class="m-form" [formGroup]="LoginForm">
+  <form name="Login" (ngSubmit)="HandleLogin()" method="post" class="m-form" [formGroup]="LoginForm">
     <h2 class="Form-title">Login</h2>
     <div class="form-group mb-2">
       <label for="Username" class="mb-1">Username</label>
@@ -159,7 +159,12 @@
       </div>
     </div>
     <div class="btn-cont">
-      <button type="submit" class="btn btn-outline-success mt-4">Submit</button>
+      <button type="submit" class="btn btn-outline-success mt-4">
+        <div class="spinner-border" role="status" *ngIf="IsloggedInProcessing">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <span *ngIf="!IsloggedInProcessing">Submit</span>
+      </button>
     </div>
   </form>
 </div>

@@ -758,7 +758,7 @@
 
 
 <main class="fade-out {{!display_splash? 'fade-in':'content-hidden'}}">  <!-- *ngIf="!display_splash" -->
-  <nav class="navbar sticky-top navbar-expand-lg bg-light" *ngIf="IsLoggedIn">
+  <nav class="navbar sticky-top navbar-expand-lg bg-light" *ngIf="IsLoggedIn&&!IsWrongUrl">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/">Phatak Status</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -12,8 +12,11 @@ export class AppComponent {
   splashScreen = true;
   display_splash = true;
   IsLoggedIn = false;
+  IsWrongUrl = false;
+
   constructor(private dbService: DbService) {
     this.getLoggedInStatus();
+    this.getWrongUrlStatus();
     setTimeout(() => {
       this.splashScreen = false;
       setTimeout(() => {
@@ -25,6 +28,13 @@ export class AppComponent {
   async getLoggedInStatus() {
     this.dbService.IsLoggedIn.subscribe((data) => {
       this.IsLoggedIn = data;
+    });
+  }
+
+  async getWrongUrlStatus() {
+    this.dbService.IsWrongUrl.subscribe((data) => {
+      this.IsWrongUrl = data;
+      console.log(this.IsWrongUrl);
     });
   }
 

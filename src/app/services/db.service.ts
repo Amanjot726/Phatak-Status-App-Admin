@@ -12,6 +12,7 @@ export class DbService {
 
   phataksList = new BehaviorSubject<any[]>([]);
   IsLoggedIn = new BehaviorSubject<any>(false);
+  IsWrongUrl = new BehaviorSubject<any>(false);
   auth = getAuth();
 
   getPhataks(){

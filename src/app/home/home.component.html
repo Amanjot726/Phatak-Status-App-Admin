@@ -172,7 +172,7 @@
 
           <div class="Form-manage-btn">
             <button type="submit" class="btn btn-outline-success mt-2" (click)="SubmitForm()">
-              <div class="spinner-border text-light" role="status" *ngIf="formSubmitLoading">
+              <div class="spinner-border" role="status" *ngIf="formSubmitLoading">
                 <span class="visually-hidden">Loading...</span>
               </div>
               <span *ngIf="!formSubmitLoading">{{updateData ? 'Update': 'Submit'}}</span>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { DbService } from './services/db.service';
 import { InchargesComponent } from './incharges/incharges.component';
 import { LoginComponent } from './login/login.component';
+import { Error404Component } from './error404/error404.component';
 
 // provideFirebaseApp(() => initializeApp(environment.firebase));
 
@@ -23,7 +24,8 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     AboutComponent,
     InchargesComponent,
-    LoginComponent
+    LoginComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,7 @@ import { LoginComponent } from './login/login.component';
     provideStorage(() => getStorage())
   ],
   providers: [DbService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

@@ -39,8 +39,14 @@ export class LoginComponent implements OnInit {
 		return this.LoginForm.get(input);
 	}
 
-  Login() {
+  HandleLogin(){
     this.IsloggedInProcessing = true;
+    setTimeout(() => {
+      this.Login();
+    }, 500);
+  }
+
+  Login() {
     const myModalEl = document.getElementById('LoginFailed');
     const modal = new Modal(myModalEl);
     if (this.LoginForm.invalid){
@@ -73,11 +79,10 @@ export class LoginComponent implements OnInit {
         }
         document.querySelector('.modal-errorInfo').innerHTML = errorMessage;
         modal.show(myModalEl);
-        // Modal.show(myModalEl);
-        // const myModal = new bootstrap.Modal(document.getElementById('myModal'), options)
-        // console.log(errorCode, errorMessage);
       });
-      this.IsloggedInProcessing = false;
+      setTimeout(() => {
+        this.IsloggedInProcessing = false;
+      }, 700);
 
   }
 
