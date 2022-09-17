@@ -12,6 +12,29 @@
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"> -->
 </head>
 <body>
+  <div class="modal fade" id="LoginFailed" tabindex="-1" aria-labelledby="LoginFailedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h5 class="modal-title" id="LoginFailedLabel">Modal title</h5>
+
+        </div> -->
+        <div class="modal-body">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="inner-content">
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+            <lottie-player src="./assets/Failed.json"  background="transparent" speed="0.9"  style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+            <!-- <img src="./assets/Failed.gif" alt="Login Failed"> -->
+            <div class="modal-erorr">Login Failed</div>
+            <div class="modal-errorInfo mt-2"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <app-root></app-root>
 
   <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>

@@ -55,3 +55,32 @@ body{
   /* background: rgb(75, 119, 84); */
 }
 
+.btn-close{
+  top: 15px;
+  right: 15px;
+  width: 0.5em;
+  height: 0.5em;
+  position: absolute;
+}
+
+.modal-body .inner-content{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.modal-erorr{
+  color: #f32424;
+  font-family: 'pacifico', cursive;
+  font-size: 25px;
+}
+
+.modal-footer{
+  justify-content: center !important;
+}
+
+.modal-footer .btn{
+  padding-left: 30px;
+  padding-right: 30px;
+}

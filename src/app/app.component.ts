@@ -33,7 +33,7 @@ export class AppComponent {
       // Sign-out successful.
       // console.log("logged out");
     }).catch((error) => {
-      // console.log(error);
+      console.log(error);
       // An error happened.
     });
   }
