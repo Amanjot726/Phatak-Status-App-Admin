@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { getAuth } from '@angular/fire/auth';
-import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { collection, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { onAuthStateChanged } from '@firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 
@@ -13,6 +14,9 @@ export class DbService {
   phataksList = new BehaviorSubject<any[]>([]);
   IsLoggedIn = new BehaviorSubject<any>(false);
   IsWrongUrl = new BehaviorSubject<any>(false);
+  IsAdmin = new BehaviorSubject<any>(false);
+  IsGuest = new BehaviorSubject<any>(false);
+  // UserID = new Be;
   auth = getAuth();
 
   getPhataks(){
@@ -31,15 +35,29 @@ export class DbService {
     this.IsLoggedIn.next(status);
   }
 
+  async getisAdmin(uid: any){
+    let admin = false;
+    const unsub = onSnapshot(doc(this.firestore, "Users", uid), (doc) => {
+      // console.log("Current data: ", doc.data());
+      console.log("Is Admin: ",doc.data()?.["isAdmin"]);
+      this.IsAdmin.next(doc.data()?.["isAdmin"]);
+      if (doc.data()?.["isAdmin"]) {
+        admin = true;
+      }
+    });
+    return admin;
+  }
 
 
-  constructor(private firestore: Firestore) {
+
+  constructor(private firestore: Firestore, private router: Router, private ngZone: NgZone) {
     this.getPhataks()
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         // User is signed in
         const uid = user.uid;
         this.updateAuthState(true);
+        this.getisAdmin(uid);
       } else {
         // User is signed out
         this.updateAuthState(false);

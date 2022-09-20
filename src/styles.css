@@ -80,6 +80,10 @@ body{
   font-size: 25px;
 }
 
+.modal-errorInfo{
+  text-align: center;
+}
+
 .modal-footer{
   justify-content: center !important;
 }

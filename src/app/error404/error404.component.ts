@@ -17,6 +17,7 @@ export class Error404Component implements OnInit {
 
   goHome() {
     this.dbService.IsWrongUrl.next(false);
+    console.log("Redirecting to Home by Error Component");
     this.router.navigate(['/']);
   }
 

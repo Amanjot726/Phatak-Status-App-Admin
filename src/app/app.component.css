@@ -200,23 +200,23 @@ box-shadow: 0px 0px 8px 3px rgba(227,227,227,0.87);
 }
 
 .splash_screen{
-position: absolute;
-top: 50%;
-left: 50%;
--webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .contain{
-opacity: 0;
+  opacity: 0;
 }
 .contain.fade-in {
--webkit-animation: fadeIn ease 1.2s 500ms forwards;
-animation: fadeIn ease 1.2s 500ms forwards;
+  -webkit-animation: fadeIn ease 1.2s 500ms forwards;
+  animation: fadeIn ease 1.2s 500ms forwards;
 }
 .contain.fade-out{
--webkit-animation: fadeout 1s ease-in-out forwards;
-        animation: fadeout 1s ease-in-out forwards;
+  -webkit-animation: fadeout 1s ease-in-out forwards;
+          animation: fadeout 1s ease-in-out forwards;
 }
 
 

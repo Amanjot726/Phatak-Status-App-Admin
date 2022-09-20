@@ -1,10 +1,12 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { getAuth } from '@angular/fire/auth';
+import { getAuth, signOut } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { DbService } from '../services/db.service';
-import Modal from "bootstrap/js/src/modal";
+// import Modal from "bootstrap/js/src/modal";
+import { Modal } from 'bootstrap';
+import { doc, Firestore, onSnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,7 @@ export class LoginComponent implements OnInit {
 		Password: new FormControl('',[Validators.required, Validators.minLength(8)]),
 	});
   IsLoggedIn = false;
+  IsAdmin = false;
   IsloggedInProcessing = false;
 
   async getLoggedInStatus() {
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  constructor(private dbService: DbService, private router: Router, private ngZone: NgZone) {
+  constructor(private dbService: DbService, private router: Router, private ngZone: NgZone, private firestore: Firestore) {
     this.getLoggedInStatus();
 
   }
@@ -38,6 +41,14 @@ export class LoginComponent implements OnInit {
   input(input:any) {
 		return this.LoginForm.get(input);
 	}
+
+  HandleGuestLogin(){
+    this.dbService.IsGuest.next(true);
+    this.dbService.IsLoggedIn.next(true);
+    this.dbService.IsWrongUrl.next(false);
+    this.dbService.IsAdmin.next(false);
+    this.ngZone.run(() => this.router.navigate(['/']));
+  }
 
   HandleLogin(){
     if (this.LoginForm.invalid){
@@ -60,8 +71,26 @@ export class LoginComponent implements OnInit {
     signInWithEmailAndPassword(this.dbService.auth, this.LoginForm.get('Username')?.value, this.LoginForm.get('Password')?.value)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        this.ngZone.run(() => this.router.navigate(['/']));
+        const user = userCredential.user.uid;
+        onSnapshot(doc(this.firestore, "Users", user), (doc) => {
+          this.dbService.IsAdmin.next(doc.data()?.["isAdmin"]);
+          if (doc.data()?.["isAdmin"]) {
+            this.IsAdmin = true;
+            this.dbService.IsLoggedIn.next(true);
+            console.log("Redirecting to Home by login component");
+            this.ngZone.run(() => this.router.navigate(['/']));
+          }
+          else{
+            this.IsAdmin = false;
+            signOut(this.dbService.auth).then(() => {}).catch((error) => {
+              console.log(error);
+            });
+            let errorMessage = "Don't have Admin Privileges. Please try again with a different account or Login as a Guest";
+            document.querySelector('.modal-erorr').innerHTML = "Login Failed";
+            document.querySelector('.modal-errorInfo').innerHTML = errorMessage;
+            modal.show(myModalEl);
+          }
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -81,6 +110,7 @@ export class LoginComponent implements OnInit {
         else {
           errorMessage = "Something went wrong!!! Please try again.";
         }
+        document.querySelector('.modal-erorr').innerHTML = "Login Failed";
         document.querySelector('.modal-errorInfo').innerHTML = errorMessage;
         modal.show(myModalEl);
       });

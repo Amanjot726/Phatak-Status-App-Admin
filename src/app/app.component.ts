@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { signOut } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { DbService } from './services/db.service';
 
 @Component({
@@ -13,10 +14,12 @@ export class AppComponent {
   display_splash = true;
   IsLoggedIn = false;
   IsWrongUrl = false;
+  IsGuest = false;
 
-  constructor(private dbService: DbService) {
+  constructor(private dbService: DbService, private router: Router, private ngZone: NgZone) {
     this.getLoggedInStatus();
     this.getWrongUrlStatus();
+    this.getGuestStatus();
     setTimeout(() => {
       this.splashScreen = false;
       setTimeout(() => {
@@ -34,18 +37,30 @@ export class AppComponent {
   async getWrongUrlStatus() {
     this.dbService.IsWrongUrl.subscribe((data) => {
       this.IsWrongUrl = data;
-      console.log(this.IsWrongUrl);
+    });
+  }
+
+  async getGuestStatus() {
+    this.dbService.IsGuest.subscribe((data) => {
+      this.IsGuest = data;
     });
   }
 
   async logout() {
-    signOut(this.dbService.auth).then(() => {
-      // Sign-out successful.
-      // console.log("logged out");
-    }).catch((error) => {
-      console.log(error);
-      // An error happened.
-    });
+    if (this.IsGuest) {
+      this.dbService.IsGuest.next(false);
+      this.dbService.IsLoggedIn.next(false);
+      // this.ngZone.run(() => this.router.navigate(['Login']));
+    }
+    else{
+      await signOut(this.dbService.auth).then(() => {
+        // Sign-out successful.
+        // console.log("logged out");
+      }).catch((error) => {
+        console.log(error);
+        // An error happened.
+      });
+    }
   }
 
 }

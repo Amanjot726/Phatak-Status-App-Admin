@@ -166,5 +166,9 @@
         <span *ngIf="!IsloggedInProcessing">Submit</span>
       </button>
     </div>
+    <div class="or-divider">
+      <span>or</span>
+    </div>
+    <div class="guest" (click)="HandleGuestLogin()">Log In as Guest</div>
   </form>
 </div>

@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { deleteDoc, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { deleteDoc, doc, Firestore, onSnapshot, GeoPoint } from '@angular/fire/firestore';
 import { deleteObject, getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { FormGroup,FormControl, FormArray, FormRecord, Validators } from "@angular/forms";
 import { collection, setDoc, Timestamp } from '@firebase/firestore';
+import { Modal } from 'bootstrap';
 import * as $ from 'jquery';
 import { DbService } from '../services/db.service';
 
@@ -18,6 +19,10 @@ export class HomeComponent implements OnInit {
   updateData = false;
 	// le = Number(0);
   formSubmitLoading = false;
+  IsLoggedIn = false;
+  IsAdmin = false;
+  IsGuest = false;
+  // UserID = new Be;
 
 	// location =
 
@@ -66,7 +71,7 @@ export class HomeComponent implements OnInit {
 		let value:any = {...this.phatakForm.value};
 		let phatakInfo = {
       phatakId: value?.phatakId?.length === 0 ? doc(collection(this.firestore, "Crossings")).id : value.phatakId,
-      location: value.location,
+      location: new GeoPoint(value.location.latitude, value.location.longitude),
       phatakName: value.phatakName,
       personInChargeName: value.personInChargeName,
       personInChargePhone: "+91 "+value.personInChargePhone,
@@ -104,8 +109,8 @@ export class HomeComponent implements OnInit {
       // }, 1000);
 		},
 		(error)=>{
-			console.log(error);
       this.formSubmitLoading = false;
+			console.log(error);
 		});
   }
 
@@ -128,12 +133,26 @@ export class HomeComponent implements OnInit {
 			phatakStatus: phatak.phatakStatus,
 			trafficStatus: phatak.trafficStatus,
 			imageURL: phatak.imageURL,
-			timings: phatak.timings.length === 0 ? [] : phatak.timings.map(element => ({
-        time: datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm'),
-        trafficStatus: element.trafficStatus,
-        train: element.train
-			}))
+      // timings: phatak.timings.map(e => new FormGroup({
+      //   time: new FormControl(datepipe.transform(phatak.timings[0].time.toDate(), 'yyyy-MM-dd HH:mm')),
+      //   trafficStatus: new FormControl(phatak.timings[0].trafficStatus),
+      //   train: new FormControl(phatak.timings[0].train)
+      // }))
     });
+    // phatak.timings.length === 0 ? [] : phatak.timings.map(element => ({
+    //   time: datepipe.transform(element.time.toDate(), 'yyyy-MM-dd HH:mm'),
+    //   trafficStatus: element.trafficStatus,
+    //   train: element.train
+    // }))
+    if (phatak.timings.length != 0){
+      (this.phatakForm.get('timings') as FormArray).push(
+        new FormGroup({
+          time: new FormControl(datepipe.transform(phatak.timings[0].time.toDate(), 'yyyy-MM-dd HH:mm')),
+          trafficStatus: new FormControl(phatak.timings[0].trafficStatus),
+          train: new FormControl(phatak.timings[0].train)
+        })
+      );
+    }
 		// this.phatakForm = new FormGroup({
 		// 	phatakId: new FormControl(phatak.phatakId),
 		// 	phatakName: new FormControl(phatak.phatakName),
@@ -158,22 +177,24 @@ export class HomeComponent implements OnInit {
 	}
 
 	deletePhatak(phatakId: string, imageURL: string) {
-		console.log('phatakId',phatakId);
-		let docRef = doc(this.firestore, "Crossings/" + phatakId);
-		deleteDoc(docRef).then(() => {
-      // delete image from storage getting storage path from imageURL
-      // let storageRef = ref(this.storage, "Crossings/" + imageURL.split("%2F")[1].split("?")[0]);
-      let storageRef = ref(this.storage,imageURL);
-      deleteObject(storageRef).then(() => {
-        console.log("Image deleted successfully");
-      }).catch((error) => {
-        console.log("Error while deleting image", error);
-      });
-			console.log("Delete Successfully");
-		})
-		.catch((error) => {
-			console.log(error);
-		})
+    if (this.IsAuthorized()){
+      console.log('phatakId',phatakId);
+      let docRef = doc(this.firestore, "Crossings/" + phatakId);
+      deleteDoc(docRef).then(() => {
+        // delete image from storage getting storage path from imageURL
+        // let storageRef = ref(this.storage, "Crossings/" + imageURL.split("%2F")[1].split("?")[0]);
+        let storageRef = ref(this.storage,imageURL);
+        deleteObject(storageRef).then(() => {
+          console.log("Image deleted successfully");
+        }).catch((error) => {
+          console.log("Error while deleting image", error);
+        });
+        console.log("Delete Successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
 	}
 
 
@@ -183,6 +204,51 @@ export class HomeComponent implements OnInit {
     // this.phatakForm.get('location'['latitude'])
 		return this.phatakForm.get(input);
 	}
+
+  IsAuthorized() {
+    if (this.IsLoggedIn && this.IsAdmin) {
+      return true;
+    }
+    else{
+      const myModalEl = document.getElementById('LoginFailed');
+      const modal = new Modal(myModalEl);
+      let errorMessage = "Don't have Admin Privileges. Please try again with a different account.";
+      document.querySelector('.modal-erorr').innerHTML = "Unauthorized";
+      document.querySelector('.modal-errorInfo').innerHTML = errorMessage;
+      modal.show(myModalEl);
+      return false;
+    }
+  }
+
+  async getLoggedInStatus() {
+    this.dbService.IsLoggedIn.subscribe((data) => {
+      if (data) {
+        this.IsLoggedIn = true;
+      } else {
+        this.IsLoggedIn = false;
+      }
+    });
+  }
+
+  async getAdminStatus() {
+    this.dbService.IsAdmin.subscribe((data) => {
+      if (data) {
+        this.IsAdmin = true;
+      } else {
+        this.IsAdmin = false;
+      }
+    });
+  }
+
+  async getGuestStatus() {
+    this.dbService.IsGuest.subscribe((data) => {
+      if (data) {
+        this.IsGuest = true;
+      } else {
+        this.IsGuest = false;
+      }
+    });
+  }
 
   ResetForm(){
     this.phatakForm.reset();
@@ -217,10 +283,12 @@ export class HomeComponent implements OnInit {
 	}
   SubmitForm() {
     if (this.phatakForm.valid) {
-      this.formSubmitLoading = true;
-      setTimeout(() => {
-        this.addPhatakToFirebase();
-      }, 300);
+      if (this.IsAuthorized()){
+        this.formSubmitLoading = true;
+        setTimeout(() => {
+          this.addPhatakToFirebase();
+        }, 300);
+      }
     }
     else{
       this.phatakForm.markAllAsTouched();
@@ -238,6 +306,9 @@ export class HomeComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.setphataksList();
+    this.getLoggedInStatus();
+    this.getAdminStatus();
+    this.getGuestStatus();
 
 		$(document).ready(function () {
 		  // $('input[type=number]').on('mousewheel', function(e) {
