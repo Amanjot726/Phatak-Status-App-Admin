@@ -8,6 +8,10 @@ import { DbService } from '../services/db.service';
 import { Modal } from 'bootstrap';
 import { doc, Firestore, onSnapshot } from '@angular/fire/firestore';
 
+
+
+  // "node_modules/jquery/dist/jquery.min.js",
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
