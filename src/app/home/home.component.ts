@@ -4,9 +4,15 @@ import { deleteDoc, doc, Firestore, onSnapshot, GeoPoint } from '@angular/fire/f
 import { deleteObject, getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { FormGroup,FormControl, FormArray, FormRecord, Validators } from "@angular/forms";
 import { collection, setDoc, Timestamp } from '@firebase/firestore';
-import { Modal } from 'bootstrap';
 import * as $ from 'jquery';
 import { DbService } from '../services/db.service';
+import Modal from "bootstrap/js/src/modal";
+// import { Modal } from 'bootstrap';
+
+// we cannot import directly from bootstrap as it will import the whole bootstrap library again which is already imported
+// in angular.json and will cause some problems in the app (like, the navbar hamburger icon will not work properly and did not collapse the navbar on clicking the hamburger icon)
+
+
 
 @Component({
 	selector: 'app-home',

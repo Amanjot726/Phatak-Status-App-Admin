@@ -4,13 +4,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { DbService } from '../services/db.service';
-// import Modal from "bootstrap/js/src/modal";
-import { Modal } from 'bootstrap';
 import { doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import Modal from "bootstrap/js/src/modal";
+// import { Modal } from 'bootstrap';
+
+// we cannot import directly from bootstrap as it will import the whole bootstrap library again which is already imported
+// in angular.json and will cause some problems in the app (like, the navbar hamburger icon will not work properly and did not collapse the navbar on clicking the hamburger icon)
 
 
 
-  // "node_modules/jquery/dist/jquery.min.js",
+
+  // "node_modules/jquery/dist/jquery.min.js";
 
 @Component({
   selector: 'app-login',
