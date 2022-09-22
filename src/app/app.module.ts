@@ -15,6 +15,7 @@ import { DbService } from './services/db.service';
 import { InchargesComponent } from './incharges/incharges.component';
 import { LoginComponent } from './login/login.component';
 import { Error404Component } from './error404/error404.component';
+import { SessionStorageService } from './services/session-storage.service';
 
 // provideFirebaseApp(() => initializeApp(environment.firebase));
 
@@ -37,7 +38,7 @@ import { Error404Component } from './error404/error404.component';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())
   ],
-  providers: [DbService],
+  providers: [DbService, SessionStorageService],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

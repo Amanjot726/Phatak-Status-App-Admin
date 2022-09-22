@@ -19,7 +19,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -30,7 +29,10 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "src/assets/CustomJS/lottie-player.js"
-            ]
+            ],
+            "allowedCommonJsDependencies": [
+              "jquery"
+           ]
           },
           "configurations": {
             "production": {

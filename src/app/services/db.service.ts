@@ -4,6 +4,7 @@ import { collection, doc, Firestore, onSnapshot } from '@angular/fire/firestore'
 import { Router } from '@angular/router';
 import { onAuthStateChanged } from '@firebase/auth';
 import { BehaviorSubject } from 'rxjs';
+import { SessionStorageService } from './session-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,55 @@ export class DbService {
   IsGuest = new BehaviorSubject<any>(false);
   // UserID = new Be;
   auth = getAuth();
+
+
+
+  constructor(private firestore: Firestore, private router: Router, private ngZone: NgZone, private sessionStorage:SessionStorageService) {
+    this.getPhataks()
+    this.getGuestStatus();
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        // User is signed in
+        const uid = user.uid;
+        this.updateAuthState(true);
+        this.getisAdmin(uid);
+      } else {
+        // User is signed out
+        this.updateAuthState(false);
+      }
+    });
+  }
+
+  public setGuestStatus(status: boolean){
+    if (status) {
+      // this.IsLoggedIn.next(true);
+      this.IsGuest.next(true);
+      this.sessionStorage.set("IsGuest", "true");
+    }
+    else{
+      // this.IsLoggedIn.next(false);
+      this.IsGuest.next(false);
+      this.sessionStorage.set("IsGuest", "false");
+    }
+
+    console.log("DbService -> setGuestStatus:", status);
+  }
+
+  async getGuestStatus(){
+    let status = this.sessionStorage.get("IsGuest");
+    if (status == "true") {
+      console.log("DbService -> setting guest status to true");
+      this.IsLoggedIn.next(true);
+      this.IsGuest.next(true);
+    }
+    else{
+      console.log("DbService -> setting guest status to false");
+      this.IsLoggedIn.next(false);
+      this.IsGuest.next(false);
+    }
+    console.log("DbService -> IsGuest:", status);
+  }
+
 
   getPhataks(){
     let collectionRef = collection(this.firestore, "Crossings");
@@ -49,19 +99,4 @@ export class DbService {
   }
 
 
-
-  constructor(private firestore: Firestore, private router: Router, private ngZone: NgZone) {
-    this.getPhataks()
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        // User is signed in
-        const uid = user.uid;
-        this.updateAuthState(true);
-        this.getisAdmin(uid);
-      } else {
-        // User is signed out
-        this.updateAuthState(false);
-      }
-    });
-  }
 }

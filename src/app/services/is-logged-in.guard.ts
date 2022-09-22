@@ -6,6 +6,7 @@ import { doc, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import { DbService } from './db.service';
+import { SessionStorageService } from './session-storage.service';
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class IsLoggedInGuard implements CanActivate {
   IsGuest = false;
   IsLoggedIn = false;
 
-  constructor(private router: Router, private firestore: Firestore, private ngZone: NgZone, private dbService: DbService) {
+  constructor(private router: Router, private firestore: Firestore, private ngZone: NgZone, private dbService: DbService, private sessionService: SessionStorageService) {
     provideFirebaseApp(() => initializeApp(environment.firebase));
     this.getLoggedInStatus();
     this.getGuestStatus();
@@ -30,14 +31,11 @@ export class IsLoggedInGuard implements CanActivate {
 
   async getGuestStatus() {
     this.dbService.IsGuest.subscribe((data) => {
+      console.log("Login Gaurd -> fetching guestStatus from DbService setting own guest status to ",data);
       this.IsGuest = data;
     });
-    this.dbService.IsLoggedIn.subscribe((data) => {
-      if (!data) {
-        console.log("Redirecting to Login by Login Gaurd Service");
-        this.ngZone.run(() => this.router.navigate(['Login']));
-      }
-    });
+
+
   }
 
 
@@ -46,10 +44,13 @@ export class IsLoggedInGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
       const auth = getAuth();
-      if (this.IsLoggedIn || this.IsGuest) {
+
+      console.log("Login Gaurd -> if ",this.IsLoggedIn , this.IsGuest , this.sessionService.get('IsGuest') == 'true')
+      if (this.IsLoggedIn || this.IsGuest || this.sessionService.get('IsGuest') == 'true') {
         return true;
       }
       else {
+        console.log("Redirecting to Login by Login Gaurd Service");
         this.ngZone.run(() => this.router.navigate(['/Login']));
         return false;
       }

@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
     this.dbService.IsLoggedIn.next(true);
     this.dbService.IsWrongUrl.next(false);
     this.dbService.IsAdmin.next(false);
+    this.dbService.setGuestStatus(true);
     this.ngZone.run(() => this.router.navigate(['/']));
   }
 

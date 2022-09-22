@@ -50,7 +50,7 @@ export class AppComponent {
     if (this.IsGuest) {
       this.dbService.IsGuest.next(false);
       this.dbService.IsLoggedIn.next(false);
-      // this.ngZone.run(() => this.router.navigate(['Login']));
+      this.dbService.setGuestStatus(false);
     }
     else{
       await signOut(this.dbService.auth).then(() => {
@@ -61,6 +61,7 @@ export class AppComponent {
         // An error happened.
       });
     }
+    this.ngZone.run(() => this.router.navigate(['Login']));
   }
 
 }
